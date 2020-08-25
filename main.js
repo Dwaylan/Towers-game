@@ -42,14 +42,31 @@ console.log("c: " + stacks.c);
 }
 
 // Next, what do you think this function should do?
+// We need a way to move the variable
 // movePiece should have a start and an end. The game should start with the startStack
 // aka "a"
-// and continue on until the proper sequence is reached at the end stack.
-// aka stack "c"
+// and continue on until the proper sequence is reached at the endstack.
+// ** endstack can be "b" or "c" but it cannot be "a"
 const movePiece = (startStack, endStack) => {
-// function "movePiece" takes startStack and endStack as arguemts
 
-}
+// function "movePiece" takes startStack and endStack as arguemts but what do they actaully
+// do as arguemtns? startStack needs to be the beginning and endStack needs to be the end of 
+// a move so:
+
+// *** The push() method adds new items to the end of an array, and returns the new length.
+// *** The pop() method removes the last element of an array, and returns that element
+
+// what I would like to do is pop the last element off of the starting stack and retrun it 
+//  to a new stack
+
+//  I created a new variable called endPiece which will call the startStack and pop off the 
+// last element of said stack
+let movingPiece = startStack.pop()
+
+endStack.push(movingPiece)
+// endStack.push takes in the moving piece and literally pushes it to a new array
+} 
+
 
 
 // Before you move, should you check if the move it actually allowed? 
@@ -74,6 +91,9 @@ const checkForWin = (startStack, endStack) => {
 // This is the one function that runs the game
 // startStack is what the user enters for their starting stack
 // endStack is what the user enters for their ending stack
+// 1.) Check if the move is legal
+// 2.) If move is legal proceed with the process
+// 3.) If said legal move constitues as a "win" print/log a winning message
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
 
