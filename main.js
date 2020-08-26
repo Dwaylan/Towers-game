@@ -31,6 +31,12 @@ b: [],
 c: [],
 };
 
+let a = stacks.a
+let b = stacks.b
+let c = stacks.c
+// a, b, and c are player inputs, but they need a variable to grab.
+// Therefore we need them to hold their corresponding stacks. 
+
 // Start here. What is this function doing?
 const printStacks = () => {
 console.log("a: " + stacks.a);
@@ -48,10 +54,42 @@ console.log("c: " + stacks.c);
 // and continue on until the proper sequence is reached at the endstack.
 // ** endstack can be "b" or "c" but it cannot be "a"
 const movePiece = (startStack, endStack) => {
-
 // function "movePiece" takes startStack and endStack as arguemts but what do they actaully
-// do as arguemtns? startStack needs to be the beginning and endStack needs to be the end of 
+// do as arguements? startStack needs to be the beginning and endStack needs to be the end of 
 // a move so:
+let beginPhase = startStack;
+let endPhase = endstack;
+
+if (beginPhase == 'a' && endPhase == 'b'){
+  b.push(a.pop());
+  return stacks;
+  
+}
+if (beginPhase == 'a' && endPhase == 'c'){
+  c.push(a.pop());
+  return stacks;
+
+}
+if (beginPhase == 'b' && endPhase == 'a'){
+  a.push(b.pop());
+  return stacks;
+
+}
+if (beginPhase == 'b' && endPhase == 'c'){
+  c.push(b.pop());
+  return stacks;
+
+}
+if (beginPhase == 'c' && endPhase == 'a'){
+  a.push(c.pop());
+  return stacks;
+
+}
+if (beginPhase == 'c' && endPhase == 'b'){
+  b.push(c.pop());
+  return stacks;
+
+// First and foremost startStack and endStack MUST be defined
 
 // *** The push() method adds new items to the end of an array, and returns the new length.
 // *** The pop() method removes the last element of an array, and returns that element
@@ -59,13 +97,14 @@ const movePiece = (startStack, endStack) => {
 // what I would like to do is pop the last element off of the starting stack and retrun it 
 //  to a new stack
 
+// *** I could not figure out how to do this so I commented it out and went back to the lengthy code
 //  I created a new variable called endPiece which will call the startStack and pop off the 
 // last element of said stack
-let movingPiece = startStack.pop()
+// let movingPiece = (startStack).pop();
+// endStack.push(movingPiece);
+// endStack.push takes in the moving piece and literally pushes it to a new array ***
+}
 
-endStack.push(movingPiece)
-// endStack.push takes in the moving piece and literally pushes it to a new array
-} 
 
 
 
@@ -84,7 +123,6 @@ const isLegal = (startStack, endStack) => {
 // just because "c" is the last array.***
 const checkForWin = (startStack, endStack) => {
   // Your code here
-
 }
 
 // When is this function called? What should it do with its argument?
