@@ -4,7 +4,8 @@ const assert = require('assert');
 // brings in the assert module for unit testing
 
 const readline = require('readline');
-// brings in the readline module to access the command line
+// brings in the readline allows the program to read an interprit 
+// user input. 
 
 const rl = readline.createInterface({
 input: process.stdin,
@@ -55,40 +56,13 @@ console.log("c: " + stacks.c);
 // ** endstack can be "b" or "c" but it cannot be "a"
 const movePiece = (startStack, endStack) => {
 // function "movePiece" takes startStack and endStack as arguemts but what do they actaully
-// do as arguements? startStack needs to be the beginning and endStack needs to be the end of 
+// do as arguements? startStack needs to be the beginxning and endStack needs to be the end of 
 // a move so:
-let beginPhase = startStack;
-let endPhase = endstack;
+let beginningPhase = stacks[startStack];
+let endPhase = stacks[endStack];
 
-if (beginPhase == 'a' && endPhase == 'b'){
-  b.push(a.pop());
-  return stacks;
-  
-}
-if (beginPhase == 'a' && endPhase == 'c'){
-  c.push(a.pop());
-  return stacks;
-
-}
-if (beginPhase == 'b' && endPhase == 'a'){
-  a.push(b.pop());
-  return stacks;
-
-}
-if (beginPhase == 'b' && endPhase == 'c'){
-  c.push(b.pop());
-  return stacks;
-
-}
-if (beginPhase == 'c' && endPhase == 'a'){
-  a.push(c.pop());
-  return stacks;
-
-}
-if (beginPhase == 'c' && endPhase == 'b'){
-  b.push(c.pop());
-  return stacks;
-
+let movingPhase = beginningPhase.pop()
+endPhase.push(movingPhase)
 // First and foremost startStack and endStack MUST be defined
 
 // *** The push() method adds new items to the end of an array, and returns the new length.
@@ -112,36 +86,116 @@ if (beginPhase == 'c' && endPhase == 'b'){
 // Should 3 be able to be stacked on 2?
 // This function is to check and see if the top piece from the startStack to the top piece
 // of the endStack is a legal move. Remember, larger numbers CANNOT be stacked on smaller numbers
+
 const isLegal = (startStack, endStack) => {
-  // Your code here
+  // larger pieces cannot be stacked on smaller pieces. 
+  let lastElementA = a[a.length - 1]
+  let lastElementB =b[b.length - 1]
+  let lastElementC = c[c.length - 1]
+
+    if (startStack == 'a' && endStack == 'b'){
+        if(lastElementA > lastElementB){
+          return false 
+        } else {
+          return true
+        }
+    } if (startStack == 'b' && endStack == 'c'){
+        if(lastElementB > lastElementC){
+          return false 
+        }  else {
+          return true
+        }
+    } if (startStack == 'a' && endStack == 'c'){
+      if(lastElementA > lastElementC){
+        return false 
+      } else {
+        return true
+      }
+    } if (startStack == 'c' && endStack == 'a'){
+      if(lastElementC > lastElementA){
+        return false 
+      } else {
+        return true
+      }
+    } if (startStack == 'b' && endStack == 'a'){
+      if(lastElementB > lastElementA){
+        return false 
+      } else {
+        return true
+      }
+    } if (startStack == 'c' && endStack == 'b'){
+      if(lastElementC > lastElementA){
+        return false 
+      } else {
+        return true
+      }
+    } if(startStack === endStack){
+      return false
+    } else {
+      return false
+    }
+
+  
 
 }
+
 
 // What is a win in Towers of Hanoi? When should this function run?
 // "win" is when endStack is equal to: [4,3,2,1]
 // *** note that the endStack can be "b" OR "c". It's not necessarily "c"
 // just because "c" is the last array.***
-const checkForWin = (startStack, endStack) => {
-  // Your code here
+
+const checkForWin = () => {
+// We're checking to see if a win has happened. Remember, we have already checked
+// to see if the move is legal so we have proceeded to this step. If we have returned
+// a stack on b or c that is equal to 4 we have WON! now we need to log a winning statement
+// if applicable
+
+// If the length of b is 4 log player win. Remember we should have safegaurds
+// in place beyond this point to make sure you can only have a length of 4 by 
+// following proper protocol and aligning all elements as [4,3,2,1]
+if (b.length === 4){
+  console.log("success. player win")
+  return true
+// else, if c has a length of 4 return player win
+} else if (c.length === 4){
+    console.log("success. player win")
+    return true
+} else {
+// else return false and continue the loop. 
+  return false
 }
+}
+
 
 // When is this function called? What should it do with its argument?
 // This is the one function that runs the game
+const towersOfHanoi = (startStack, endStack) => {
+  // Your code here
+  if (isLegal(startStack, endStack) == true){
+    movePiece(startStack, endStack)
+    
+  } else{
+    console.log(errorMessage)
+  
+  }
+  checkForWin()
+}
 // startStack is what the user enters for their starting stack
 // endStack is what the user enters for their ending stack
 // 1.) Check if the move is legal
 // 2.) If move is legal proceed with the process
 // 3.) If said legal move constitues as a "win" print/log a winning message
-const towersOfHanoi = (startStack, endStack) => {
-  // Your code here
 
-}
-
+// The function below prints the board
 const getPrompt = () => {
 printStacks();
+// Function below asks the starting point
 rl.question('start stack: ', (startStack) => {
+//  Function below asks the ending point
     rl.question('end stack: ', (endStack) => {
     towersOfHanoi(startStack, endStack);
+//  Get prompt starts the loop all over again UNLESS there is a win
     getPrompt();
     });
 });
