@@ -77,6 +77,10 @@ endPhase.push(movingPhase)
 // let movingPiece = (startStack).pop();
 // endStack.push(movingPiece);
 // endStack.push takes in the moving piece and literally pushes it to a new array ***
+
+// **** UPDATE 9/9/20. I figured out why I couldn't get the function to fire. I kept trying 
+// to create startStack and endStack which were variables that were already defined. Rather
+// than redefining them I called them and IT WORKED!
 }
 
 
@@ -88,55 +92,33 @@ endPhase.push(movingPhase)
 // of the endStack is a legal move. Remember, larger numbers CANNOT be stacked on smaller numbers
 
 const isLegal = (startStack, endStack) => {
-  // larger pieces cannot be stacked on smaller pieces. 
-  let lastElementA = a[a.length - 1]
-  let lastElementB =b[b.length - 1]
-  let lastElementC = c[c.length - 1]
+// What is legal?:
+// Start is not empty. Starting array aka 'a' should have four elements [4,3,2,1]
+// First round of moves should only allow you to move to an empty array aka 'b' and 'c'
+// You cannot start at 'a' and end at 'a'. You MUST move to either 'b' or 'c' and 
+// those arrays must be empty at the start of the game. 
+// small pieces must be stacked on their bigger counterparts, not vice-versa. 
 
-    if (startStack == 'a' && endStack == 'b'){
-        if(lastElementA > lastElementB){
-          return false 
-        } else {
-          return true
-        }
-    } if (startStack == 'b' && endStack == 'c'){
-        if(lastElementB > lastElementC){
-          return false 
-        }  else {
-          return true
-        }
-    } if (startStack == 'a' && endStack == 'c'){
-      if(lastElementA > lastElementC){
-        return false 
-      } else {
-        return true
-      }
-    } if (startStack == 'c' && endStack == 'a'){
-      if(lastElementC > lastElementA){
-        return false 
-      } else {
-        return true
-      }
-    } if (startStack == 'b' && endStack == 'a'){
-      if(lastElementB > lastElementA){
-        return false 
-      } else {
-        return true
-      }
-    } if (startStack == 'c' && endStack == 'b'){
-      if(lastElementC > lastElementA){
-        return false 
-      } else {
-        return true
-      }
-    } if(startStack === endStack){
-      return false
-    } else {
-      return false
-    }
+// what is illegal?
+// If start is empty then the game is attempting to initiate illegally
+// If the end piece is trying to stack on a smaller piece that preceeded it
 
-  
+let beginningPhase = stacks[startStack]
+let endPhase = stacks[endStack]
 
+//  If the a array is [4,3,2,1] and then the Last index of A is the length of 
+// the a array minus 1 the the last index would be 2 rather than 1. This is what
+// our new lastIndex variable is doing for all three stacks
+let lastIndexOfA = a[a.length -1]; 
+let lastIndexOfB = b[b.length -1];
+let lastIndexOfC = c[c.length -1];
+
+//  If the end phase tries to end on the beginning phase array, it is illegal
+// you cannot start and end on 'a', you cannot start and end on 'b', etc. 
+if (beginningPhase ==  endPhase){
+  console.log('illegal attempt. reconsider')
+  return false
+}
 }
 
 
