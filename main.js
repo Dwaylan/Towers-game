@@ -114,6 +114,8 @@ const isLegal = (startStack, endStack) => {
 // what variables are being referenced when called. 
 let beginningPhase = stacks[startStack]
 let endPhase = stacks[endStack]
+let pieceToMove = beginningPhase(beginningPhase.length-1)
+let tipOfEnd = endPhase(endPhase.length-1)
 
 
 //  If the end phase tries to end on the beginning phase array, it is illegal
@@ -124,6 +126,19 @@ if(startStack ==  endStack){
 }
 if(beginningPhase == undefined && endPhase == undefined){
   console.log(errorMessage)
+  return false
+}
+if(startArray.length == 0){
+  console.log(errorMessage)
+  return false
+}
+if(endPhase.length =0){
+  return true
+}
+if(pieceToMove < tipOfEnd){
+  return true
+}
+else{
   return false
 }
 }
