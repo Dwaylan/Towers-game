@@ -48,6 +48,13 @@ console.log("c: " + stacks.c);
 // It prints the key as text and corresponding array right next to it
 }
 
+// 9/16/2020 I needed an error message variable to reference. I was using
+// error message in the code below but it was never defined. I didn't realize
+// Why the game wouldn't load until I looked closer at the reference error in the terminal
+let errorMessage = 'Illegal move. Please reconsider'
+
+let winStatement = 'Congrats. Player is victorious'
+
 // Next, what do you think this function should do?
 // We need a way to move the variable
 // movePiece should have a start and an end. The game should start with the startStack
@@ -103,20 +110,20 @@ const isLegal = (startStack, endStack) => {
 // If start is empty then the game is attempting to initiate illegally
 // If the end piece is trying to stack on a smaller piece that preceeded it
 
+// Once again beginning phase and end phase must be defined. Our function needs ti know
+// what variables are being referenced when called. 
 let beginningPhase = stacks[startStack]
 let endPhase = stacks[endStack]
 
-//  If the a array is [4,3,2,1] and then the Last index of A is the length of 
-// the a array minus 1 the the last index would be 2 rather than 1. This is what
-// our new lastIndex variable is doing for all three stacks
-let lastIndexOfA = a[a.length -1]; 
-let lastIndexOfB = b[b.length -1];
-let lastIndexOfC = c[c.length -1];
 
 //  If the end phase tries to end on the beginning phase array, it is illegal
 // you cannot start and end on 'a', you cannot start and end on 'b', etc. 
-if (beginningPhase ==  endPhase){
-  console.log('illegal attempt. reconsider')
+if(startStack ==  endStack){
+  console.log(errorMessage)
+  return false
+}
+if(beginningPhase == undefined && endPhase == undefined){
+  console.log(errorMessage)
   return false
 }
 }
@@ -133,15 +140,19 @@ const checkForWin = () => {
 // a stack on b or c that is equal to 4 we have WON! now we need to log a winning statement
 // if applicable
 
+// Defining our stack variables once again
+let b = stacks.b
+let c = stacks.c
+
 // If the length of b is 4 log player win. Remember we should have safegaurds
 // in place beyond this point to make sure you can only have a length of 4 by 
 // following proper protocol and aligning all elements as [4,3,2,1]
 if (b.length === 4){
-  console.log("success. player win")
+  console.log(winStatement)
   return true
 // else, if c has a length of 4 return player win
 } else if (c.length === 4){
-    console.log("success. player win")
+    console.log(winStatement)
     return true
 } else {
 // else return false and continue the loop. 
